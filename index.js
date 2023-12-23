@@ -15,7 +15,7 @@ function mostrarDatosApi() {
         .then(res => res.json())
         .then(data => {
         console.log(data);
-        joke.innerHTML = data.joke;
+        joke.innerHTML = `" ${data.joke} "`;
     });
 }
 mostrarDatosApi();
