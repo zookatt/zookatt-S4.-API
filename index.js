@@ -50,3 +50,21 @@ if (button) {
     });
 }
 mostrarDatosApi();
+const weather = document.getElementById('tiempo');
+function mostrarDatosTiempo() {
+    fetch("https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,wind_speed_10m&hourly=temperature_2m,relative_humidity_2m,wind_speed_10m", {
+        headers: {
+            "Accept": "application/json"
+        }
+    })
+        .then(res => res.json())
+        .then(data => {
+        const currentTemperature = data.current.temperature_2m;
+        weather.innerHTML = `Temperatura actual: ${currentTemperature}°C`;
+        console.log(data.current);
+    })
+        .catch(error => {
+        console.error('Error al obtener datos meteorológicos:', error);
+    });
+}
+mostrarDatosTiempo();
