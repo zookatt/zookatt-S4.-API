@@ -14,8 +14,8 @@ const vote1: HTMLButtonElement = document.getElementById('1') as HTMLButtonEleme
 const vote2: HTMLButtonElement = document.getElementById('2') as HTMLButtonElement;
 const vote3: HTMLButtonElement = document.getElementById('3') as HTMLButtonElement;
 
-function mostrarDatosApi() {
-  fetch("https://icanhazdadjoke.com/", {
+function mostrarDatosApi() {//primera api de chistes
+  fetch("https://icanhazdadjoke.com/",  {
     headers: {
       "Accept": "application/json"
     }
@@ -37,6 +37,28 @@ function mostrarDatosApi() {
     });
 }
 
+function mostrarDatosApiChuck() {//segunda api de chistes
+  fetch("https://api.chucknorris.io/jokes/random",  {
+    headers: {
+      "Accept": "application/json"
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      currentJoke = {
+        joke: data.value,
+        score: 0,
+        date: new Date().toISOString(),
+      };
+
+      if (jokeFixed) {
+        jokeFixed.innerHTML = `" ${currentJoke.joke} "`;
+      }
+
+
+    });
+}
 
 vote1.addEventListener("click", (e: MouseEvent) => {
   e.preventDefault();
@@ -62,11 +84,18 @@ vote3.addEventListener("click", (e: MouseEvent) => {
 if (button) {
   button.addEventListener('click', (e: MouseEvent) => {
     e.preventDefault();
-    mostrarDatosApi();
+    const random:number = Math.floor(Math.random() * 10); //Anadi Math.random para alternar los APIS
+    if(random<=5){ 
+      mostrarDatosApi();
+    }else{
+      mostrarDatosApiChuck();
+    }
+    
   });
 }
 
 mostrarDatosApi();
+
 
 
 const weather: HTMLElement = document.getElementById('tiempo')!;

@@ -25,6 +25,25 @@ function mostrarDatosApi() {
         }
     });
 }
+function mostrarDatosApiChuck() {
+    fetch("https://api.chucknorris.io/jokes/random", {
+        headers: {
+            "Accept": "application/json"
+        }
+    })
+        .then(res => res.json())
+        .then(data => {
+        console.log(data);
+        currentJoke = {
+            joke: data.value,
+            score: 0,
+            date: new Date().toISOString(),
+        };
+        if (jokeFixed) {
+            jokeFixed.innerHTML = `" ${currentJoke.joke} "`;
+        }
+    });
+}
 vote1.addEventListener("click", (e) => {
     e.preventDefault();
     currentJoke.score = 1;
@@ -46,7 +65,13 @@ vote3.addEventListener("click", (e) => {
 if (button) {
     button.addEventListener('click', (e) => {
         e.preventDefault();
-        mostrarDatosApi();
+        const random = Math.floor(Math.random() * 10); //Anadi Math.random para alternar los APIS
+        if (random <= 5) {
+            mostrarDatosApi();
+        }
+        else {
+            mostrarDatosApiChuck();
+        }
     });
 }
 mostrarDatosApi();
